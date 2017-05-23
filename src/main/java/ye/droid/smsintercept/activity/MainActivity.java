@@ -1,11 +1,16 @@
 package ye.droid.smsintercept.activity;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,6 +29,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initUI();
+        checkAppPermission();
+    }
+
+    private void checkAppPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_SMS},
+                    100);
+        }else {
+            Log.i(TAG,"权限已经授予！");
+        }
 
     }
 
@@ -52,16 +68,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void openIntercept(View view) {
         smsBinder.callOpenIntercept();
-        Toast.makeText(this, "开启", Toast.LENGTH_SHORT).show();
     }
 
     public void closeIntercept(View view) {
         smsBinder.callCloseIntercept();
-        Toast.makeText(this, "关闭", Toast.LENGTH_SHORT).show();
     }
 
     public void getInterceptStatus(View view) {
         smsBinder.callGetInterceptStatus();
-        Toast.makeText(this, "获取SMS状态！", Toast.LENGTH_SHORT).show();
     }
 }

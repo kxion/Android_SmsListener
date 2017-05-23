@@ -29,7 +29,6 @@ public class SmsHandler extends Handler {
         } else if (smsBean.getAction() == 2) {
             Log.i(TAG, "删除...");
         }else {
-            Log.i(TAG,"其它");
         }
     }
 }

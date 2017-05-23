@@ -29,5 +29,5 @@
         </receiver>
         <service android:name=".service.SmsService" />
     </application>
-
+    <uses-permission android:name="android.permission.READ_SMS" />
 </manifest>

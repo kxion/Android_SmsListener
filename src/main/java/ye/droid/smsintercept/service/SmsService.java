@@ -36,18 +36,18 @@ public class SmsService extends Service {
         smsObserver = new SmsObserver(resolver, new SmsHandler(this));
         resolver.registerContentObserver(Uri.parse("content://sms"), true, smsObserver);
         Toast.makeText(getApplicationContext(), "短信监听服务已经启动！", Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "监听服务已经启动");
+        Log.i(TAG, "短信监听服务已经启动");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         this.getContentResolver().unregisterContentObserver(smsObserver);
+        Toast.makeText(getApplicationContext(), "短信监听服务已经关闭！", Toast.LENGTH_SHORT).show();
         Process.killProcess(Process.myPid());
     }
 
     private void closeInter() {
-        Log.i(TAG, "closeInter...");
     }
 
     private void getInterStatus() {
